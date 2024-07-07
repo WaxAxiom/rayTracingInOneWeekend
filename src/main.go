@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 )
 
 func main() {
@@ -10,6 +11,7 @@ func main() {
 	fmt.Println("P3\n", imageWidth, imageHeight, "\n255")
 
 	for i := 0.0; i < imageHeight; i++ {
+		log.Println("Scanlines remaining:", (imageHeight - i))
 		for j := 0.0; j < imageWidth; j++ {
 			r := i / (imageWidth - 1.0)
 			g := j / (imageHeight - 1.0)
@@ -22,4 +24,6 @@ func main() {
 			fmt.Println(ir, ig, ib)
 		}
 	}
+
+	log.Println("Done.")
 }
