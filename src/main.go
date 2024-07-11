@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+
+	"main/src/vector"
 )
 
 func main() {
@@ -13,15 +15,8 @@ func main() {
 	for i := 0.0; i < imageHeight; i++ {
 		log.Println("Scanlines remaining:", (imageHeight - i))
 		for j := 0.0; j < imageWidth; j++ {
-			r := i / (imageWidth - 1.0)
-			g := j / (imageHeight - 1.0)
-			b := 0.0
-
-			var ir = int(255.999 * r)
-			var ig = int(255.999 * g)
-			var ib = int(255.999 * b)
-
-			fmt.Println(ir, ig, ib)
+			pixelColor := vector.New([3]float64{i / (imageWidth - 1.0), 0.0, j / (imageHeight - 1.0)})
+			vector.WriteColor(pixelColor)
 		}
 	}
 
