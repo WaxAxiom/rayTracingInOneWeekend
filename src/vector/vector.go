@@ -34,3 +34,18 @@ func (v Vec3) Length() float64 {
 func (v Vec3) LengthSquared() float64 {
 	return v.e[0]*v.e[0] + v.e[1]*v.e[1] + v.e[2]*v.e[2]
 }
+
+func Dot(u Vec3, v Vec3) float64 {
+	return u.e[0]*v.e[0] + u.e[1]*v.e[1] + u.e[2]*v.e[2]
+}
+
+func Cross(u Vec3, v Vec3) Vec3 {
+	return Vec3{[3]float64{u.e[1]*v.e[2] - u.e[2]*v.e[1],
+		u.e[2]*v.e[0] - u.e[0]*v.e[2],
+		u.e[0]*v.e[1] - u.e[1]*v.e[0]}}
+}
+
+func UnitVector(v Vec3) Vec3 {
+	t := 1 / v.Length()
+	return Vec3{[3]float64{t * v.e[0], t * v.e[1], t * v.e[2]}}
+}
