@@ -4,19 +4,21 @@ import (
 	"fmt"
 	"log"
 
-	"main/src/vector"
+	"main/src/color"
 )
 
 func main() {
 	imageWidth, imageHeight := 256.0, 256.0
 
-	fmt.Println("P3\n", imageWidth, imageHeight, "\n255")
+	fmt.Println("P3")
+	fmt.Println(imageWidth, imageHeight)
+	fmt.Println("255")
 
 	for i := 0.0; i < imageHeight; i++ {
 		log.Println("Scanlines remaining:", (imageHeight - i))
 		for j := 0.0; j < imageWidth; j++ {
-			pixelColor := vector.New([3]float64{i / (imageWidth - 1.0), 0.0, j / (imageHeight - 1.0)})
-			vector.WriteColor(pixelColor)
+			pixelColor := color.New([3]float64{i / (imageWidth - 1.0), 0.0, j / (imageHeight - 1.0)})
+			color.WriteColor(pixelColor)
 		}
 	}
 
