@@ -1,5 +1,5 @@
 // Package point3 contains the Point3 type (an alias of Vec3) and supporting methods
-package point
+package point3
 
 type Point3 struct {
 	e [3]float64
