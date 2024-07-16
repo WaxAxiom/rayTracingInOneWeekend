@@ -11,7 +11,7 @@ import (
 )
 
 func hitSphere(center point3.Point3, radius float64, r ray.Ray) bool {
-	oc := vec3.Sum(center, vec3.ScaleFloat(r.Origin(), -1.0))
+	oc := vec3.SumVec3(center, vec3.ScaleFloat(r.Origin(), -1.0))
 	a := vec3.Dot(r.Direction(), r.Direction())
 	b := -2.0 * vec3.Dot(r.Direction(), oc)
 	c := vec3.Dot(oc, oc) - radius*radius
@@ -27,7 +27,7 @@ func rayColor(r ray.Ray) color.Color {
 	unitDirection := vec3.UnitVector(r.Direction())
 	a := 0.5 * (unitDirection.Y() + 1.0)
 
-	return color.Sum(color.ScaleFloat(color.New([3]float64{1.0, 1.0, 1.0}), (1.0-a)),
+	return color.SumColor(color.ScaleFloat(color.New([3]float64{1.0, 1.0, 1.0}), (1.0-a)),
 		color.ScaleFloat(color.New([3]float64{0.5, 0.7, 1.0}), a))
 }
 
@@ -51,11 +51,11 @@ func main() {
 	pixelDeltaU := vec3.ScaleFloat(*viewportU, 1/float64(imageWidth))
 	pixelDeltaV := vec3.ScaleFloat(*viewportV, 1/float64(imageHeight))
 
-	viewportUpperLeft := vec3.Sum(*cameraCenter, vec3.ScaleFloat(*vec3.New([3]float64{0, 0, focalLength}), -1.0))
-	viewportUpperLeft = vec3.Sum(viewportUpperLeft, vec3.ScaleFloat(*viewportU, -1.0/2.0))
-	viewportUpperLeft = vec3.Sum(viewportUpperLeft, vec3.ScaleFloat(*viewportV, -1.0/2.0))
+	viewportUpperLeft := vec3.SumVec3(*cameraCenter, vec3.ScaleFloat(*vec3.New([3]float64{0, 0, focalLength}), -1.0))
+	viewportUpperLeft = vec3.SumVec3(viewportUpperLeft, vec3.ScaleFloat(*viewportU, -1.0/2.0))
+	viewportUpperLeft = vec3.SumVec3(viewportUpperLeft, vec3.ScaleFloat(*viewportV, -1.0/2.0))
 
-	pixel00Loc := vec3.Sum(vec3.ScaleFloat(vec3.Sum(pixelDeltaU, pixelDeltaV), 0.5), viewportUpperLeft)
+	pixel00Loc := vec3.SumVec3(vec3.ScaleFloat(vec3.SumVec3(pixelDeltaU, pixelDeltaV), 0.5), viewportUpperLeft)
 
 	fmt.Println("P3")
 	fmt.Println(imageWidth, imageHeight)
@@ -64,9 +64,9 @@ func main() {
 	for i := 0; i < int(imageHeight); i++ {
 		log.Println("Scanlines remaining:", (imageHeight - i))
 		for j := 0; j < imageWidth; j++ {
-			pixelCenter := vec3.Sum(pixel00Loc, vec3.Sum(vec3.ScaleFloat(pixelDeltaU, float64(j)), vec3.ScaleFloat(pixelDeltaV, float64(i))))
+			pixelCenter := vec3.SumVec3(pixel00Loc, vec3.SumVec3(vec3.ScaleFloat(pixelDeltaU, float64(j)), vec3.ScaleFloat(pixelDeltaV, float64(i))))
 
-			rayDirection := vec3.Sum(pixelCenter, vec3.ScaleFloat(*cameraCenter, -1.0))
+			rayDirection := vec3.SumVec3(pixelCenter, vec3.ScaleFloat(*cameraCenter, -1.0))
 			r := ray.New(*cameraCenter, rayDirection)
 
 			pixelColor := rayColor(*r)

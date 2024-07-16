@@ -25,7 +25,14 @@ func (c Color) B() float64 {
 	return c.e[2]
 }
 
-func Sum(u Color, v Color) Color {
+func SumFloat(v Color, t float64) Color {
+	return Color{[3]float64{
+		t + v.e[0],
+		t + v.e[1],
+		t + v.e[2]}}
+}
+
+func SumColor(u Color, v Color) Color {
 	return Color{[3]float64{
 		u.e[0] + v.e[0],
 		u.e[1] + v.e[1],

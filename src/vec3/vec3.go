@@ -35,7 +35,14 @@ func New(e [3]float64) *Vec3 {
 	return &Vec3{e}
 }
 
-func Sum(u Vec3, v Vec3) Vec3 {
+func SumFloat(v Vec3, t float64) Vec3 {
+	return Vec3{[3]float64{
+		t + v.e[0],
+		t + v.e[1],
+		t + v.e[2]}}
+}
+
+func SumVec3(u Vec3, v Vec3) Vec3 {
 	return Vec3{[3]float64{
 		u.e[0] + v.e[0],
 		u.e[1] + v.e[1],
