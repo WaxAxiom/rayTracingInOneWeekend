@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math"
 
 	"main/src/color"
 	"main/src/point3"
@@ -10,18 +11,26 @@ import (
 	"main/src/vec3"
 )
 
-func hitSphere(center point3.Point3, radius float64, r ray.Ray) bool {
+func hitSphere(center point3.Point3, radius float64, r ray.Ray) float64 {
 	oc := center.AddVec3(r.Origin().ScaleFloat(-1.0))
 	a := vec3.Dot(r.Direction(), r.Direction())
 	b := -2.0 * vec3.Dot(r.Direction(), oc)
 	c := vec3.Dot(oc, oc) - radius*radius
 	discriminant := b*b - 4*a*c
-	return discriminant >= 0
+
+	if discriminant < 0 {
+		return -1.0
+	} else {
+		return (-b - math.Sqrt(discriminant)) / (2.0 * a)
+	}
 }
 
 func rayColor(r ray.Ray) color.Color {
-	if hitSphere(*vec3.New([3]float64{0, 0, -1}), 0.5, r) {
-		return color.New([3]float64{1, 0, 0})
+	t := hitSphere(*vec3.New([3]float64{0, 0, -1}), 0.5, r)
+
+	if t > 0.0 {
+		N := vec3.UnitVector(r.At(t).AddVec3(vec3.New([3]float64{0, 0, -1}).ScaleFloat(-1.0)))
+		return color.New([3]float64{N.X() + 1, N.Y() + 1, N.Z() + 1}).ScaleFloat(0.5)
 	}
 
 	unitDirection := vec3.UnitVector(r.Direction())
