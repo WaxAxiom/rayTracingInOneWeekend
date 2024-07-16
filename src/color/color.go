@@ -42,8 +42,8 @@ func ScaleColor(u Color, v Color) Color {
 
 func WriteColor(pixelColor Color) {
 	ir := int(255.999 * pixelColor.R())
-	ib := int(255.999 * pixelColor.B())
 	ig := int(255.999 * pixelColor.G())
+	ib := int(255.999 * pixelColor.B())
 
-	fmt.Println(ir, ib, ig)
+	fmt.Println(ir, ig, ib)
 }
