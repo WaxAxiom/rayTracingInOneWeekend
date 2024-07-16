@@ -25,6 +25,35 @@ func (c Color) B() float64 {
 	return c.e[2]
 }
 
+func (v Color) AddFloat(t float64) Color {
+	return Color{[3]float64{
+		v.e[0] + t,
+		v.e[1] + t,
+		v.e[2] + t}}
+}
+
+func (v Color) AddColor(u Color) Color {
+	return Color{[3]float64{
+		v.e[0] + u.e[0],
+		v.e[1] + u.e[1],
+		v.e[2] + u.e[2]}}
+
+}
+
+func (v Color) ScaleFloat(t float64) Color {
+	return Color{[3]float64{
+		v.e[0] * t,
+		v.e[1] * t,
+		v.e[2] * t}}
+}
+
+func (v Color) ScaleColor(u Color) Color {
+	return Color{[3]float64{
+		v.e[0] * u.e[0],
+		v.e[1] * u.e[1],
+		v.e[2] * u.e[2]}}
+}
+
 func SumFloat(v Color, t float64) Color {
 	return Color{[3]float64{
 		t + v.e[0],
