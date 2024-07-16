@@ -20,7 +20,7 @@ func (r Ray) Direction() vec3.Vec3 {
 }
 
 func (r Ray) At(t float64) point3.Point3 {
-	return vec3.Sum(r.origin, vec3.Scale(r.direction, t))
+	return vec3.Sum(r.origin, vec3.ScaleFloat(r.direction, t))
 }
 
 func New(p point3.Point3, v vec3.Vec3) *Ray {

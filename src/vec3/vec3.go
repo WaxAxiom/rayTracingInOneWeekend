@@ -42,8 +42,12 @@ func Sum(u Vec3, v Vec3) Vec3 {
 		u.e[2] + v.e[2]}}
 }
 
-func Scale(v Vec3, t float64) Vec3 {
+func ScaleFloat(v Vec3, t float64) Vec3 {
 	return Vec3{[3]float64{t * v.e[0], t * v.e[1], t * v.e[2]}}
+}
+
+func ScaleVec3(u Vec3, v Vec3) Vec3 {
+	return Vec3{[3]float64{u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]}}
 }
 
 func Dot(u Vec3, v Vec3) float64 {
@@ -58,5 +62,5 @@ func Cross(u Vec3, v Vec3) Vec3 {
 }
 
 func UnitVector(v Vec3) Vec3 {
-	return Scale(v, 1/v.Length())
+	return ScaleFloat(v, 1/v.Length())
 }
