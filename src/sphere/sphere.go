@@ -5,6 +5,7 @@ import (
 	"math"
 
 	"main/src/hittable"
+	"main/src/interval"
 	"main/src/point3"
 	"main/src/ray"
 	"main/src/vec3"
@@ -19,7 +20,7 @@ func New(p point3.Point3, radius float64) *Sphere {
 	return &Sphere{p, radius}
 }
 
-func (s Sphere) Hit(r ray.Ray, rayMinT float64, rayMaxT float64, rec *hittable.HitRecord) bool {
+func (s Sphere) Hit(r ray.Ray, i interval.Interval, rec *hittable.HitRecord) bool {
 	oc := s.center.AddVec3(r.Origin().ScaleFloat(-1.0))
 	a := r.Direction().LengthSquared()
 	h := vec3.Dot(r.Direction(), oc)
@@ -32,9 +33,9 @@ func (s Sphere) Hit(r ray.Ray, rayMinT float64, rayMaxT float64, rec *hittable.H
 
 	sqrtd := math.Sqrt(discriminant)
 	root := (h - sqrtd) / a
-	if root <= rayMinT || rayMaxT <= root {
+	if !i.Surrounds(root) {
 		root = (h + sqrtd) / a
-		if root <= rayMinT || rayMaxT <= root {
+		if !i.Surrounds(root) {
 			return false
 		}
 	}

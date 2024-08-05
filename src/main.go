@@ -7,6 +7,7 @@ import (
 
 	"main/src/color"
 	"main/src/hittable"
+	"main/src/interval"
 	"main/src/ray"
 	"main/src/sphere"
 	"main/src/vec3"
@@ -28,7 +29,7 @@ import (
 
 func rayColor(r ray.Ray, world hittable.Hittables) color.Color {
 	var rec hittable.HitRecord
-	if world.Hit(r, 0, math.Inf(1), &rec) {
+	if world.Hit(r, *interval.New(0, math.Inf(1)), &rec) {
 		return color.SumColor(color.New([3]float64{rec.Normal.X(), rec.Normal.Y(), rec.Normal.Z()}),
 			color.New([3]float64{1, 1, 1})).ScaleFloat(0.5)
 	}

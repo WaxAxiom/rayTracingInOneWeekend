@@ -2,6 +2,7 @@
 package hittable
 
 import (
+	"main/src/interval"
 	"main/src/point3"
 	"main/src/ray"
 	"main/src/vec3"
@@ -24,7 +25,7 @@ func (h *HitRecord) SetFaceNormal(r ray.Ray, outwardNormal vec3.Vec3) {
 }
 
 type Hittable interface {
-	Hit(r ray.Ray, rayMinT float64, rayMaxT float64, rec *HitRecord) bool
+	Hit(r ray.Ray, i interval.Interval, rec *HitRecord) bool
 }
 
 type Hittables struct {
@@ -35,13 +36,13 @@ func (hs *Hittables) Add(object Hittable) {
 	hs.objects = append(hs.objects, object)
 }
 
-func (hs *Hittables) Hit(r ray.Ray, rayMinT float64, rayMaxT float64, rec *HitRecord) bool {
+func (hs *Hittables) Hit(r ray.Ray, i interval.Interval, rec *HitRecord) bool {
 	var tempRecord HitRecord
 	hitAnything := false
-	closestSoFar := rayMaxT
+	closestSoFar := i.Max()
 
 	for _, object := range hs.objects {
-		if object.Hit(r, rayMinT, closestSoFar, &tempRecord) {
+		if object.Hit(r, *interval.New(i.Min(), closestSoFar), &tempRecord) {
 			hitAnything = true
 			closestSoFar = tempRecord.T
 			*rec = tempRecord
