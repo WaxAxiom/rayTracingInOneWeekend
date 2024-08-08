@@ -1,4 +1,4 @@
-// Package hittable contains the Interval type and associated methods
+// Package interval contains the Interval type and associated methods
 package interval
 
 type Interval struct {
