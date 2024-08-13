@@ -30,8 +30,6 @@ func (c *Camera) Render(world hittable.Hittables) {
 	fmt.Println(c.ImageWidth, c.imageHeight)
 	fmt.Println("255")
 
-	log.Println(c.ImageWidth, c.imageHeight)
-
 	for i := 0; i < int(c.imageHeight); i++ {
 		log.Println("Scanlines remaining:", (c.imageHeight - i))
 		for j := 0; j < c.ImageWidth; j++ {
@@ -60,9 +58,6 @@ func (c *Camera) Initialize() {
 	viewportWidth := viewportHeight * (float64(c.ImageWidth) / float64(c.imageHeight))
 	cameraCenter := vec3.New([3]float64{0, 0, 0})
 	c.center = *cameraCenter
-
-	log.Println(c.center)
-	log.Println("center")
 
 	viewportU := vec3.New([3]float64{viewportWidth, 0, 0})
 	viewportV := vec3.New([3]float64{0, -viewportHeight, 0})
