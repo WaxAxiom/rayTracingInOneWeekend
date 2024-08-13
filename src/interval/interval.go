@@ -29,3 +29,13 @@ func (i Interval) Contains(x float64) bool {
 func (i Interval) Surrounds(x float64) bool {
 	return i.min < x && x < i.max
 }
+
+func (i Interval) Clamp(x float64) float64 {
+	if x < i.Min() {
+		return i.Min()
+	}
+	if x > i.Max() {
+		return i.Max()
+	}
+	return x
+}

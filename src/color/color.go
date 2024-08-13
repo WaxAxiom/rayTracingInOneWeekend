@@ -3,6 +3,7 @@ package color
 
 import (
 	"fmt"
+	"main/src/interval"
 )
 
 type Color struct {
@@ -77,9 +78,10 @@ func ScaleColor(u Color, v Color) Color {
 }
 
 func WriteColor(pixelColor Color) {
-	ir := int(255.999 * pixelColor.R())
-	ig := int(255.999 * pixelColor.G())
-	ib := int(255.999 * pixelColor.B())
+	intensity := interval.New(0.0, 0.999)
+	ir := int(256 * intensity.Clamp(pixelColor.R()))
+	ig := int(256 * intensity.Clamp(pixelColor.G()))
+	ib := int(256 * intensity.Clamp(pixelColor.B()))
 
 	fmt.Println(ir, ig, ib)
 }
